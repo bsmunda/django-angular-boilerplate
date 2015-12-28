@@ -15,5 +15,3 @@
 * `$ bower install`
 * `$ python manage.py migrate`
 * `$ python manage.py runserver`
-
-Checkout the branches for different boilerplates
