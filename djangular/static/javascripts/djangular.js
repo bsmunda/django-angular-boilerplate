@@ -4,7 +4,9 @@ angular
     'djangular.config',
     'djangular.routes',
     'djangular.authentication',
-    'djangular.layout'
+    'djangular.layout',
+    'djangular.utils',
+    'djangular.posts'
   ]);
 
 angular
