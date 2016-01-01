@@ -1,32 +1,52 @@
-(function(){
+(function () {
   'use strict';
 
   angular
     .module('djangular.layout.controllers')
-    .controller('IndexController',IndexController);
+    .controller('IndexController', IndexController);
 
-  IndexController.$inject= ['$scope','Authentication','Posts','Snackbar'];
+  IndexController.$inject = ['$scope', 'Authentication', 'Posts', 'Snackbar'];
 
-  function IndexController($scope,Authentication,Posts,Snackbar){
-    var vm=this;
-    vm.IsAuthenticated = Authentication.isAuthenticated();
+  /**
+  * @namespace IndexController
+  */
+  function IndexController($scope, Authentication, Posts, Snackbar) {
+    var vm = this;
+    
+    vm.isAuthenticated = Authentication.isAuthenticated();
     vm.posts = [];
     activate();
 
-    function activate(){
-      Posts.all().then(postSuccessFn,postErrorFn);
-
-      $scope.$on('post.created',function(event,post){
+    /**
+    * @name activate
+    * @desc Actions to be performed when this controller is instantiated
+    * @memberOf djangular.layout.controllers.IndexController
+    */
+    function activate() {
+      Posts.all().then(postsSuccessFn, postsErrorFn);
+      $scope.$on('post.created', function (event, post) {
         vm.posts.unshift(post);
       });
-      $scope.$on('post.created.error',function(){
+
+      $scope.$on('post.created.error', function () {
         vm.posts.shift();
       });
 
-      function postSuccessFn(data,status, headers, config) {
-        vm.posts=data.data;
+
+      /**
+      * @name postsSuccessFn
+      * @desc Update posts array on view
+      */
+      function postsSuccessFn(data, status, headers, config) {
+        vm.posts = data.data;
       }
-      function postErrorFn(data,status, headers,config){
+
+
+      /**
+      * @name postsErrorFn
+      * @desc Show snackbar with error
+      */
+      function postsErrorFn(data, status, headers, config) {
         Snackbar.error(data.error);
       }
     }

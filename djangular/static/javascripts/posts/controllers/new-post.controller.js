@@ -1,3 +1,4 @@
+/*
 * NewPostController
 * @namespace djangular.posts.controllers
 */
